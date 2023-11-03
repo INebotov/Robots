@@ -1,0 +1,7 @@
+ENV = leonardoeth
+
+export FREQUENCY = 0x6f
+export PIPE = 0xF0F0F0F0A1LL
+export SERVO_SPUSK = 0
+export SERVO_VSVOD = 120
+export SERVO_READY = 30

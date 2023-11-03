@@ -2,9 +2,10 @@ import keys
 import curses
 import motor
 import culour
+import serialWave
 
 
-def Render(status_win):
+def Render(status_win, sender):
     rc = '\033[0m'
     tfc = {True: '\033[32m',
            False: '\033[31m'}
@@ -12,6 +13,8 @@ def Render(status_win):
     def RealRender(ks):
         values = motor.Calculate(ks.POT1, ks.POT2, ks.FIRE,
                                  ks.DIRECTION, ks.SLOW, ks.FORSAGE)
+        sender.Send(values.ToBytes())
+
         status_win.clear()
         arrow1 = '↑' if values.D11 else '↓'
         arrow2 = '↑' if values.D21 else '↓'
@@ -40,4 +43,6 @@ curses.noecho()
 
 win = curses.newwin(curses.LINES, curses.COLS)
 
-keys = keys.KeyReader(Render(win))
+sen = serialWave.Serial("/dev/ttyACM0")
+
+keys = keys.KeyReader(Render(win, sen))

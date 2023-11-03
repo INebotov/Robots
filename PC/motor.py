@@ -1,3 +1,6 @@
+import struct
+
+
 def mapv(value, leftMin, leftMax, rightMin, rightMax):
     leftSpan = leftMax - leftMin
     rightSpan = rightMax - rightMin
@@ -17,11 +20,19 @@ class MotorsValues:
     Shoot: bool = False
 
     def ToBytes(self) -> bytes:
-        return bytes([
-            int(self.Shoot),
-            self.P1, self.D11, self.D12,
-            self.P2, self.D21, self.D22
-        ])
+        format_string = 'c c ? ? ? ? ?'
+        data = (
+            bytes([self.P1]),
+            bytes([self.P2]),
+            self.D11,
+            self.D12,
+            self.D21,
+            self.D22,
+            self.Shoot
+        )
+
+        packed_data = struct.pack(format_string, *data)
+        return packed_data
 
 
 givenDiaTable = {
