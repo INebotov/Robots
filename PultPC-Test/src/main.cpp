@@ -12,13 +12,22 @@
 void setup() {
     Serial.begin(SERIAL_BOD); 
     initRadio(); 
+    Serial.println("Working on: ");
+    Serial.print("Freq: "); Serial.println(FREQUENCY); 
+    Serial.print("Pipe: "); Serial.println(PIPE); 
 }
+
 
 SensorData motor;
 void loop() {
-    if (receiveData(motor)) {
-        sendData(motor);
-    }
+    motor.P1 = 64;
+    motor.P2 = 64;
+    motor.D11 = true;
+    motor.D21 = true;
 
-    sendRadio(motor);
+    bool result = sendRadio(motor);
+    Serial.print(result);
+    Serial.println(" Radio Sended");
+    
+    delay(1000);
 }

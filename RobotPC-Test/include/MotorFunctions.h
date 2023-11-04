@@ -28,15 +28,23 @@ void MotorsCommand(const SensorData &data){
 }
 
 
-int currPos;
+int currPos = SERVO_READY;
 long int lastTime;
 
 bool ServoOnPosition(long int time, int pos){
+    Serial.print(time);
+    Serial.print(' ');
+    Serial.print(pos);
+    Serial.print(' ');
+    Serial.print(lastTime);
+    Serial.print(' ');
+    Serial.println(currPos);
+
     if (pos == currPos){
         return true;
     }
 
-    if ((time - lastTime) >= 15){
+    if ((time - lastTime) >= 50){
         if (pos > currPos)
             shooter.write(++currPos);
         else
@@ -52,6 +60,8 @@ bool ServoVzveden = false;
 void InitServo(){
     shooter.attach(PIN_SERVO);
 
-    ServoVzveden = false;
-    ServoReady = false;
+    while (!ServoOnPosition(millis(), SERVO_SPUSK));
+    while (!ServoOnPosition(millis(), SERVO_VSVOD));
+    while (!ServoOnPosition(millis(), SERVO_READY));
+    ServoReady = true;
 }

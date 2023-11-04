@@ -10,13 +10,11 @@ class KeyReader:
     POT1 = 126
     POT2 = 126
 
-    def __init__(self, renderer):
+    def __init__(self):
         self.Listener = keyboard.Listener(
             on_press=self.on_press, on_release=self.on_release)
-        self.Renderer = renderer
 
         self.Listener.start()
-        self.Listener.join()
 
     def on_press(self, key):
         if key == keyboard.Key.ctrl:
@@ -47,8 +45,6 @@ class KeyReader:
             except:
                 pass
 
-        self.Renderer(self)
-
     def on_release(self, key):
         if key == keyboard.Key.ctrl:
             self.FORSAGE = False
@@ -71,5 +67,3 @@ class KeyReader:
 
             except:
                 pass
-
-        self.Renderer(self)

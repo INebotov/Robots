@@ -8,6 +8,6 @@ void initRadio(){
     radio.openWritingPipe(PIPE); 
 }
 
-void sendRadio(const SensorData &data) {
-    radio.write((uint8_t*)&data, sizeof(data));
+bool sendRadio(const SensorData &data) {
+    return radio.write((uint8_t*)&data, sizeof(data));
 }

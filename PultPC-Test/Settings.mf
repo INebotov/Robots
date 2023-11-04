@@ -1,0 +1,5 @@
+ENV = uno
+
+export FREQUENCY = 0x6f
+export PIPE = 0xF0F0F0F0A1LL
+export SERIAL_BOD = 9600

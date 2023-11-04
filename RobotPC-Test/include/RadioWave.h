@@ -24,12 +24,14 @@ void initRadio(){
 }
 
 bool receiveData(SensorData &data) {
-    if (radio.available()) {
-        uint8_t bytes = radio.getPayloadSize();
-        if (bytes >= sizeof(data)){
-            radio.read((char*)&data, sizeof(data));
-            return true;
-        }
+    int av = radio.available();
+    //Serial.print(av);
+    if (av) {
+        radio.read((char*)&data, sizeof(data));
+
+        Serial.print("Readed: PI=");
+        Serial.println(data.P1);
+        return true;
     }
-  return false;
+    return false;
 }
